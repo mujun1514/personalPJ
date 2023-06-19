@@ -40,7 +40,7 @@ public class GoodDao {
 			psmt.setString(1, good.getGood_name());
 			psmt.setString(2, good.getGood_price());
 			psmt.setString(3, good.getGood_content());
-			psmt.setString(4, good.getGoods_number());
+			psmt.setInt(4, good.getGoods_number());
 
 			int r = psmt.executeUpdate();
 			if (r > 0) {
@@ -56,7 +56,7 @@ public class GoodDao {
 	}
 
 	// 수정
-	public int plusSys(String good_no,String goods_number) {
+	public int plusSys(String good_no,int goods_number) {
 				
 		System.out.println(good_no);
 		System.out.println(goods_number);
@@ -67,7 +67,7 @@ public class GoodDao {
 
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1,goods_number);
+			psmt.setInt(1,goods_number);
 			psmt.setString(2,good_no);
 			
 			int r = psmt.executeUpdate();
@@ -85,25 +85,30 @@ public class GoodDao {
 		}
 		return 0;
 	}
-	public int minusSys(String good_no,String goods_number) {
+	public int minusSys(String good_no,int goods_number) {
 		
-		System.out.println(good_no);
-		System.out.println(goods_number);
-		
-		
+		GoodVO good =new GoodVO();
+		SysList sys =new SysList();
+//		System.out.println(good_no);
+//		System.out.println(goods_number);
+//		int a = Integer.parseInt(good.getGoods_number());
+//		int b = Integer.parseInt(goods_number);
 		conn = Dao.getConnect();
 		sql = "update goods_table set goods_number = goods_number - ? where good_no = ?";
 
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1,goods_number);
+			psmt.setInt(1,goods_number);
 			psmt.setString(2,good_no);
-
+			
+			if(good.getGoods_number() - goods_number < 0) {
+//				System.out.println("개수가 부족합니다");
+				sys.updateStart();
+			}else if(good.getGoods_number() - goods_number > 0) {
+//				System.out.println("정상적으로 출고되었습니다.");
+			}
 			
 			int r = psmt.executeUpdate();
-			
-			
-			System.out.println("성공");
 			
 			if (r > 0) {
 				return 1;
@@ -184,7 +189,7 @@ public class GoodDao {
 				good.setGood_name(rs.getString("good_name"));
 				good.setGood_price(rs.getString("good_price"));
 				good.setGood_content(rs.getString("good_content"));
-				good.setGoods_number(rs.getString("goods_number"));
+				good.setGoods_number(rs.getInt("goods_number"));
 				good.setGood_date(rs.getString("good_date"));
 				good.setGood_cnt(rs.getString("good_cnt"));
 				return good;
@@ -207,6 +212,7 @@ public class GoodDao {
 		conn = Dao.getConnect();
 		psmt = conn.prepareStatement(sql);
 		rs = psmt.executeQuery();
+		
 		try {
 			while (rs.next()) {
 				GoodVO good = new GoodVO();
@@ -215,7 +221,7 @@ public class GoodDao {
 				good.setGood_name(rs.getString("good_name"));
 				good.setGood_price(rs.getString("good_price"));
 				good.setGood_content(rs.getString("good_content"));
-				good.setGoods_number(rs.getString("goods_number"));
+				good.setGoods_number(rs.getInt("goods_number"));
 				good.setGood_date(rs.getString("good_date"));
 				good.setGood_cnt(rs.getString("good_cnt"));
 

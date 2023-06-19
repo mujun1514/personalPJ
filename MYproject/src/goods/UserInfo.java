@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInfo {
@@ -12,6 +13,7 @@ public class UserInfo {
 	PreparedStatement psmt;
 	ResultSet rs;
 	String sql;
+	GoodMain main = new GoodMain(); 
 
 	private void close() {
 		try {
@@ -41,24 +43,26 @@ public class UserInfo {
 
 		Connection conn = null;
 		Statement stmt = null;
-		String sql = "insert into user_table (user_id, user_pw, user_name)"//
+		String sql = "insert into table_users (user_id, user_pw, user_name)"//
 				+ " values('" + id + "','" + pw + "','" + name + "')";
+		
 		try {
-
 			conn = Dao.getConnect();
-
 			stmt = conn.createStatement();
 			int r = stmt.executeUpdate(sql);
+			// 중복 체크
+
 			if (r > 0) {
 				System.out.println("회원가입 완료");
-				login.longin();
+				main.main(null);
 			} else {
 				System.out.println("회원가입 실패");
 			}
 		} catch (Exception e) {
-			System.out.println("에러발생");
-			e.printStackTrace();
-		}finally {
+			System.out.println("아이디가 중복");
+			UserInfo();
+			
+		} finally {
 			try {
 				conn.close();
 				stmt.close();

@@ -20,7 +20,7 @@ public class SysList {
 		System.out.println("내용>");
 		String good_content = scn.next();
 		System.out.println("개수>");
-		String goods_number = scn.next();
+		int goods_number = scn.nextInt();
 
 		GoodVO good = new GoodVO();
 		good.setGood_name(good_name);
@@ -72,7 +72,7 @@ public class SysList {
 				String good_no = scn.next();
 
 				System.out.println("입고할 상품의 개수를 입력해주세요");
-				String goods_number = scn.next();
+				int goods_number = scn.nextInt();
 
 				int result = dao.plusSys(good_no, goods_number);
 				System.out.println(result);
@@ -91,13 +91,13 @@ public class SysList {
 				String good_no = scn.next();
 
 				System.out.println("출고할 상품의 개수를 입력해주세요");
-				String goods_number = scn.next();
+				int goods_number = scn.nextInt();
 
-				int result = dao.minusSys(good_no, goods_number);
-				System.out.println(result);
+				int result = dao.minusSys(good_no,goods_number);
+//				System.out.println(result);
 
 				if (result > 0) {
-					System.out.println("추가완료");
+					System.out.println("출고완료");
 					lsy.listStart();
 					
 				} else {

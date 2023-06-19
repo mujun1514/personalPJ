@@ -29,20 +29,15 @@ public class Login {
 		}
 	}
 
-	static boolean longin() {
+	static boolean longin(String id, String pw) {
 
 		Scanner scn = new Scanner(System.in);
 		GoodVO boardVo = new GoodVO();
 		GoodMain main = new GoodMain();
-
-		System.out.print("ID : ");
-		String id = scn.nextLine();
-		System.out.print("PASSWORD : ");
-		String pw = scn.nextLine();
-		pp =id;
+		
 		conn = Dao.getConnect();
 		
-		sql = "select * from user_table where user_id=? and user_pw=?";
+		sql = "select * from table_users where user_id=? and user_pw=?";
 		conn = Dao.getConnect();
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -50,13 +45,12 @@ public class Login {
 			psmt.setString(2, pw);
 
 			rs = psmt.executeQuery();
-
+			
 			if (rs.next()) {
 //				System.out.println(rs.getString(1));
 				if (rs.getString(1).equals(id) && rs.getString(2).equals(pw)) {
 					return true;
-				} else if(!rs.getString(1).equals(id) && !rs.getString(2).equals(pw)){
-					System.out.println("로그인 실패");
+				} else if(!rs.getString(1).equals(id) || !rs.getString(2).equals(pw)){
 					return false;
 				}
 			}

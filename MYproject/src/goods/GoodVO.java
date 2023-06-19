@@ -15,11 +15,11 @@ public class GoodVO {
 	private String good_name;
 	private String good_price;
 	private String good_content;
-	private String goods_number;
+	private int goods_number;
 	private String good_date;
 	private String good_cnt;
 
-	public GoodVO(String good_no, String good_name, String good_price, String good_content, String goods_number) {
+	public GoodVO(String good_no, String good_name, String good_price, String good_content, int goods_number) {
 		this.good_no = good_no;
 		this.good_name = good_name;
 		this.good_price = good_price;

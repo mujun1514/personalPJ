@@ -9,15 +9,9 @@ public class GoodMain {
 	private GoodDao dao = new GoodDao();
 	private static SysList lsy = new SysList();
 	private static Scanner scn = new Scanner(System.in);
-	private String id;
+	private String loginid;
 
 	public static void main(String[] args) {
-//		boolean a = true;
-//
-//		Login login = new Login();
-//
-//		ServicePart Part = new ServicePart();
-//		Part.part();
 		
 		Login login = new Login();
 		
@@ -31,9 +25,18 @@ public class GoodMain {
 			System.out.print(">");
 			loginYn = scn.next();
 			if (loginYn.toUpperCase().equals("Y")) {
-				if (login.longin()) {
+				System.out.print("ID : ");
+				String id = scn.next();
+				System.out.print("PASSWORD : ");
+				String pw = scn.next();
+				
+				if (login.longin(id,pw)) {
 					System.out.println("로그인 완료");
 					main.start();
+				}else{
+					System.out.println("로그인 실패");
+					main.main(null);
+					break;
 				}
 			} else if (loginYn.toUpperCase().equals("N")) {
 				System.out.println("회원가입 창입니다");
@@ -42,8 +45,9 @@ public class GoodMain {
 				main.start();
 			} else {
 				System.out.println("잘못입력");
-				break;
+				main.main(null);
 			}
+			break;
 		}
 		
 	}
@@ -89,6 +93,5 @@ public class GoodMain {
 				break;
 			}
 		}
-
 	}
 }

@@ -3,7 +3,7 @@ package goods;
 import java.util.Scanner;
 
 public class ServicePart {
-	public void part() {
+	public void part(String id, String pw) {
 		Login login = new Login();
 		Buyer buyer = new Buyer();
 
@@ -25,7 +25,7 @@ public class ServicePart {
 
 					if (loginYn.toUpperCase().equals("Y")) {
 						System.out.println("관리자 로그인 창입니다");
-						if (login.longin()) {
+						if (login.longin(id,pw)) {
 							GoodMain main = new GoodMain();
 							System.out.println("로그인 완료");
 							main.start();
@@ -46,7 +46,7 @@ public class ServicePart {
 					System.out.println("Y로그인 : N회원가입");
 					loginYn = scn.next();
 					if (loginYn.toUpperCase().equals("Y")) {
-						if (login.longin()) {
+						if (login.longin(id,pw)) {
 							GoodMain main = new GoodMain();
 							System.out.println("로그인 완료");
 							buyer.BuyerMethod();
